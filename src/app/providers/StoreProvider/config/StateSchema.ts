@@ -3,11 +3,12 @@ import {AxiosInstance} from "axios";
 import {UserSchema} from "@/entities/User";
 import {AnyAction, EnhancedStore, Reducer, ReducersMapObject} from "@reduxjs/toolkit";
 import {CombinedState} from "@reduxjs/toolkit/query";
+import {AuthByUserNameSchema} from "@/features/AuthByUserName";
 
 export interface StateSchema {
     // counter: CounterSchema
     user: UserSchema
-    login?: UserSchema
+    login?: AuthByUserNameSchema
 }
 
 export type StateSchemaKeys = keyof StateSchema;

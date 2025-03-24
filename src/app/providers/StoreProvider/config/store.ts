@@ -14,7 +14,6 @@ export const createReduxStore = (initialState?: StateSchema,asyncReducers?: Redu
 
     const rootReducer: ReducersMapObject<StateSchema> = {
         ...asyncReducers,
-        // counter: counterReducer,
         user: userReducer,
     }
 
@@ -32,7 +31,6 @@ export const createReduxStore = (initialState?: StateSchema,asyncReducers?: Redu
 
     //@ts-expect-error: This is a temporary workaround for a known issue
     store.reducerManager = reducerManager;
-
     return store;
 
 }

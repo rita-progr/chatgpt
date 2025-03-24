@@ -1,0 +1,16 @@
+.Input{
+  background: var(--bg-color-input);
+  color: #ffffff;
+  font-size:16px;
+  border:1px solid var(--border-color-input);
+  border-radius: 0.5rem;
+  padding: 1rem;
+  margin: 10px 0;
+}
+input::placeholder {
+  color: var(--color-placeholder);
+}
+input{
+  color: #ffffff;
+  width: 100%;
+}

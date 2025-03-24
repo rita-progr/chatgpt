@@ -10,8 +10,9 @@ export const userSlice = createSlice({
     name:'user',
     initialState,
     reducers:{
-        getAuthData: (state, action) => {
+        setAuthData: (state, action) => {
             state.authData = action.payload;
+            localStorage.setItem(USER_LOCALSTORAGE_KEY, action.payload);
         },
         initAuthData: (state) => {
             state.authData = JSON.parse(<string>localStorage.getItem(USER_LOCALSTORAGE_KEY));
@@ -24,4 +25,4 @@ export const userSlice = createSlice({
 })
 
 export const {reducer : userReducer} = userSlice;
-export const {actions : userAction} = userSlice;
+export const {actions : userActions} = userSlice;

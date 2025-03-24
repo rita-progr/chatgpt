@@ -1,10 +1,11 @@
-import {IS_DEV} from "@/shared/const/global.ts";
+// import {IS_DEV} from "@/shared/const/global.ts";
+import {UserModal} from "@/features/AuthByUserName/ui/UserModal/UserModal.tsx";
 
 function App() {
 
   return (
     <div>
-        {IS_DEV ? "dev": "prod"}
+      <UserModal isOpen={true}/>
     </div>
   )
 }

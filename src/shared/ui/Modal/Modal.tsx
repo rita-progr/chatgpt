@@ -1,9 +1,9 @@
 import cls from './Modal.module.scss';
 import {classNames, Mods} from "@/shared/lib/classNames/classNames";
 import {Portal} from "@/shared/ui/Portal/Portal.tsx";
-import closeIcon from '@/shared/assets/close.svg'
+
 import {ReactNode, useCallback, useEffect, useRef, useState} from "react";
-import {Button} from "@/shared/ui/Button/Button.tsx";
+
 
 interface ModalProps{
     className?: string;
@@ -70,9 +70,6 @@ export const Modal = (props:ModalProps) => {
             <div className={classNames(cls.Modal, mods, [className])}>
                 <div className={cls.overlay} onClick={closeHandler}>
                     <div className={cls.modalContent} onClick={onContentClick}>
-                        <Button className={cls.closeAbs} onClick={onClose}>
-                            <img src={closeIcon} alt=""/>
-                        </Button>
                         {children}
                     </div>
                 </div>
