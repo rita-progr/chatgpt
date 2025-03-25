@@ -1,11 +1,20 @@
-// import {IS_DEV} from "@/shared/const/global.ts";
 import {UserModal} from "@/features/AuthByUserName/ui/UserModal/UserModal.tsx";
+import {useCallback, useEffect, useState} from "react";
 
 function App() {
+const [open, setOpen] = useState(false);
+
+    const onClose = useCallback(() => {
+        setOpen(false);
+    },[open])
+
+   useEffect(() => {
+       setOpen(true);
+   },[])
 
   return (
     <div>
-      <UserModal isOpen={true}/>
+      <UserModal isOpen={open} onClose={onClose}/>
     </div>
   )
 }

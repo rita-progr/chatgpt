@@ -20,7 +20,7 @@ export const UserModal = ({className, isOpen, onClose}:UserModalProps) => {
             <Suspense fallback={''}>
                 <div className={cls.form}>
                     <div className={cls.titleForm}>
-                        <p>Авторизация</p>
+                        <p className={cls.auth}>Авторизация</p>
                         <Button className={cls.closeAbs} onClick={onClose}>
                             <img src={closeIcon} alt=""/>
                         </Button>
