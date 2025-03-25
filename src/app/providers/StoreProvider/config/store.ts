@@ -4,7 +4,8 @@ import {NavigateOptions, To} from "react-router-dom";
 import {$api} from "@/shared/api/api";
 // import {IS_DEV} from "@/shared/const/global.ts";
 import {userReducer} from "@/entities/User";
-import {createReducerManager} from "@/app/providers/StoreProvider/config/reducerManager.ts";
+import {createReducerManager} from "./reducerManager.ts";
+import {chatReducer} from "@/features/chat";
 
 export const createReduxStore = (initialState?: StateSchema,asyncReducers?: ReducersMapObject<StateSchema>, navigate?:  (to: To, options?: NavigateOptions) => void | Promise<void>)=>{
     const extraArg: ThunkExtraArgs = {
@@ -15,6 +16,7 @@ export const createReduxStore = (initialState?: StateSchema,asyncReducers?: Redu
     const rootReducer: ReducersMapObject<StateSchema> = {
         ...asyncReducers,
         user: userReducer,
+        chat: chatReducer
     }
 
     const reducerManager = createReducerManager(rootReducer);

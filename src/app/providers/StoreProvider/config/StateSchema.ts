@@ -4,10 +4,12 @@ import {UserSchema} from "@/entities/User";
 import {AnyAction, EnhancedStore, Reducer, ReducersMapObject} from "@reduxjs/toolkit";
 import {CombinedState} from "@reduxjs/toolkit/query";
 import {AuthByUserNameSchema} from "@/features/AuthByUserName";
+import {ChatSchema} from "@/features/chat/model/types/chatSchema.ts";
 
 export interface StateSchema {
     // counter: CounterSchema
     user: UserSchema
+    chat: ChatSchema
     login?: AuthByUserNameSchema
 }
 
