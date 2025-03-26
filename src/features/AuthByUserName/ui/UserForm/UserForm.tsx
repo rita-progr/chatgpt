@@ -5,16 +5,17 @@ import {useSelector} from "react-redux";
 import {getUserPassword} from "../../model/selectors/getUserPassword/getUserPassword.tsx";
 import {getUserName} from "../../model/selectors/getUserName/getUserName.tsx";
 import {getUserError} from "../../model/selectors/getUserError/getUserError.tsx";
-import {authActions, authReducer, loginByUserName} from "@/features/AuthByUserName";
+import {authActions, authReducer} from "@/features/AuthByUserName";
 import {useCallback} from "react";
 import {Input} from "@/shared/ui/Input/Input.tsx";
-import {Button, ButtonType} from "@/shared/ui/Button/Button.tsx";
+
 import {CustomText} from "@/shared/ui/CustomText/CustomText.tsx";
 import {DynemicModuleLoader, ReducersList} from "@/shared/lib/components/DynemicModuleLoader/DynemicModuleLoader.tsx";
 
 
 interface UserFormProps{
     className?: string;
+
 }
 
 const intialReducer: ReducersList = {
@@ -39,9 +40,6 @@ const UserForm = ({className}:UserFormProps) => {
     },[dispatch])
 
 
-    const onLoginClick = useCallback(() => {
-        dispatch(loginByUserName());
-    }, [dispatch]);
 
     return (
         <DynemicModuleLoader reducers={intialReducer}>
@@ -56,7 +54,7 @@ const UserForm = ({className}:UserFormProps) => {
                 <Input onChange={onChangePassword} value={password} placeholder={'Ваш пароль'}/>
             </div>
 
-            <Button className={cls.btn} type={ButtonType.PRIMARY} onClick={onLoginClick}>Войти</Button>
+
         </div>
         </DynemicModuleLoader>
     )

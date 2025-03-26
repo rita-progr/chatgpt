@@ -4,7 +4,7 @@ import {NavigateOptions, To} from "react-router-dom";
 import {$api} from "@/shared/api/api";
 // import {IS_DEV} from "@/shared/const/global.ts";
 import {userReducer} from "@/entities/User";
-import {createReducerManager} from "./reducerManager.ts";
+import {createReducerManager} from "./reducerManager.tsx";
 import {chatReducer} from "@/features/chat";
 
 export const createReduxStore = (initialState?: StateSchema,asyncReducers?: ReducersMapObject<StateSchema>, navigate?:  (to: To, options?: NavigateOptions) => void | Promise<void>)=>{

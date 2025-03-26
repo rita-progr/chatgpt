@@ -1,7 +1,6 @@
 export interface IUser {
-    id:number;
-    name: string;
+    username: string;
 }
 export interface UserSchema {
-    authData?: IUser
+    authData: IUser | undefined;
 }

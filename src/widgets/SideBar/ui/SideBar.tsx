@@ -9,6 +9,7 @@ import languageSw from '@/shared/assets/language.svg'
 import addChatIcon from '@/shared/assets/add-chat.svg'
 import search from '@/shared/assets/search-simple.svg'
 import {Button, ButtonType} from "@/shared/ui/Button/Button.tsx";
+import {UserCard} from "@/entities/User/ui/UserCard/UserCard.tsx";
 
 interface SideBarProps{
     className?: string;
@@ -34,7 +35,6 @@ export const SideBar = ({className}:SideBarProps) => {
 
     return (
         <div className={classNames(cls.SideBar, {},[className])}>
-            <div>
                 <div className={cls.sideBarHeader}>
                     <img src={logo} alt="логотип"/>
                     <img src={languageSw} alt="переключить язык"/>
@@ -62,8 +62,8 @@ export const SideBar = ({className}:SideBarProps) => {
                     </div>
 
                 </div>
+            <UserCard/>
 
             </div>
-        </div>
     )
 }

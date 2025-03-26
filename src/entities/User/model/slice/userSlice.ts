@@ -3,7 +3,7 @@ import {createSlice} from "@reduxjs/toolkit";
 import {USER_LOCALSTORAGE_KEY} from "@/shared/const/global.ts";
 
 const initialState: UserSchema= {
-
+    authData: undefined,
 }
 
 export const userSlice = createSlice({
@@ -11,8 +11,9 @@ export const userSlice = createSlice({
     initialState,
     reducers:{
         setAuthData: (state, action) => {
-            state.authData = action.payload;
-            localStorage.setItem(USER_LOCALSTORAGE_KEY, action.payload);
+            const userData = { username: action.payload };
+            state.authData = userData;
+            localStorage.setItem(USER_LOCALSTORAGE_KEY, JSON.stringify(userData));
         },
         initAuthData: (state) => {
             state.authData = JSON.parse(<string>localStorage.getItem(USER_LOCALSTORAGE_KEY));
