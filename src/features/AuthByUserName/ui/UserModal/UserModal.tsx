@@ -22,7 +22,7 @@ export const UserModal = ({className, isOpen, onClose}:UserModalProps) => {
         if (onClose) {
             onClose();
         }
-    }, [dispatch]);
+    }, [dispatch, onClose]);
     return (
         <Modal className={classNames(cls.UserModal, {},[className])}
         isOpen={isOpen}

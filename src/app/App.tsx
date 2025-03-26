@@ -1,37 +1,46 @@
-import {UserModal} from "@/features/AuthByUserName/ui/UserModal/UserModal.tsx";
-import {useCallback, useEffect, useState} from "react";
-import {ChatPage} from "pages/ChatPage";
-import {userActions} from "@/entities/User";
-import {useAppDispatch} from "@/shared/lib/hooks/appDispatch/appDispatch.ts";
-import {USER_LOCALSTORAGE_KEY} from "@/shared/const/global.ts";
+import { UserModal } from "@/features/AuthByUserName/ui/UserModal/UserModal.tsx";
+import { useCallback, useEffect, useState } from "react";
+import { ChatPage } from "pages/ChatPage";
+import { getUserName, userActions } from "@/entities/User";
+import { useAppDispatch } from "@/shared/lib/hooks/appDispatch/appDispatch.ts";
+import { useSelector } from "react-redux";
 
 function App() {
-const [open, setOpen] = useState(false);
-
+    const [isModalOpen, setIsModalOpen] = useState(false);
     const dispatch = useAppDispatch();
+    const userName = useSelector(getUserName);
+    // const [isLoading, setIsLoading] = useState(true);
 
-    useEffect(()=>{
+    useEffect(() => {
         dispatch(userActions.initAuthData())
-    },[dispatch])
+    }, [dispatch]);
 
     const onClose = useCallback(() => {
-        setOpen(false);
-    },[open])
+        setIsModalOpen(false);
+    }, []);
 
-   useEffect(() => {
-       setOpen(true);
-   },[])
-    const init = localStorage.getItem(USER_LOCALSTORAGE_KEY)
+    useEffect(() => {
+        // Показываем модалку, если пользователь не авторизован
+        if (!userName) {
+            setIsModalOpen(true);
+        }
+    }, [userName,]);
 
-    if(!init){
-        return <UserModal isOpen={open} onClose={onClose}/>
-    }
+    // if (isLoading) {
+    //     return <div>Loading...</div>; // Или лоадер
+    // }
 
-  return (
-      <div>
-          <ChatPage/>
-      </div>
-  )
+    return (
+        <div>
+            {!userName && (
+                <UserModal
+                    isOpen={isModalOpen}
+                    onClose={onClose}
+                />
+            )}
+            <ChatPage />
+        </div>
+    );
 }
 
-export default App
+export default App;

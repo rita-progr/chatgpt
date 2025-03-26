@@ -10,6 +10,8 @@ import addChatIcon from '@/shared/assets/add-chat.svg'
 import search from '@/shared/assets/search-simple.svg'
 import {Button, ButtonType} from "@/shared/ui/Button/Button.tsx";
 import {UserCard} from "@/entities/User/ui/UserCard/UserCard.tsx";
+import {getUserError, getUserLoading} from "@/features/AuthByUserName";
+import {Loader} from "@/shared/ui/Loader/Loader.tsx";
 
 interface SideBarProps{
     className?: string;
@@ -19,7 +21,9 @@ export const SideBar = ({className}:SideBarProps) => {
 
     const dispatch = useAppDispatch();
     const chats = useSelector(getChatsList);
-    console.log(chats);
+    const loading = useSelector(getUserLoading);
+    const error = useSelector(getUserError);
+
     const [newChatName, setNewChatName] = useState<string>('');
 
     useEffect(()=>{
@@ -33,8 +37,14 @@ export const SideBar = ({className}:SideBarProps) => {
         }
     };
 
+    if(loading){
+        return <Loader />;
+    }
+
     return (
         <div className={classNames(cls.SideBar, {},[className])}>
+            {error && <p>error</p>}
+            <div>
                 <div className={cls.sideBarHeader}>
                     <img src={logo} alt="логотип"/>
                     <img src={languageSw} alt="переключить язык"/>
@@ -60,10 +70,11 @@ export const SideBar = ({className}:SideBarProps) => {
                             ))}
                         </ul>
                     </div>
-
                 </div>
-            <UserCard/>
-
+            </div>
+            <div className={cls.userCard}>
+                <UserCard/>
+            </div>
             </div>
     )
 }
