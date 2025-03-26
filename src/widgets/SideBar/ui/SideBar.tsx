@@ -2,7 +2,7 @@ import cls from './SideBar.module.scss';
 import {classNames} from "@/shared/lib/classNames/classNames";
 import {useAppDispatch} from "@/shared/lib/hooks/appDispatch/appDispatch.ts";
 import {useSelector} from "react-redux";
-import {addChat, DeleteChatButton, fetchChats, getChatsList} from "@/features/chat";
+import {addChat, Chat,  DeleteChatButton, fetchChats, getChatsList, updateChat} from "@/features/chat";
 import {useEffect, useState} from "react";
 import logo from '@/shared/assets/logo.svg'
 import languageSw from '@/shared/assets/language.svg'
@@ -24,18 +24,28 @@ export const SideBar = ({className}:SideBarProps) => {
     const loading = useSelector(getUserLoading);
     const error = useSelector(getUserError);
 
-    const [newChatName, setNewChatName] = useState<string>('');
+    // const [editingChatId, setEditingChatId] = useState<string | null>(null);
+    // const [editName, setEditName] = useState("");
+    //
+    // const [newChatName, setNewChatName] = useState<string>('');
 
     useEffect(()=>{
         dispatch(fetchChats());
     },[dispatch]);
 
-    const handleAddChat = () => {
-        if (newChatName.trim()) {
-            dispatch(addChat(newChatName));
-            setNewChatName('');
-        }
+    const handleAddChat = async () => {
+        await dispatch(addChat());
     };
+    //
+    // const startEditing = (chat: Chat) => {
+    //     setEditingChatId(chat.id);
+    //     setEditName(chat.name);
+    // };
+
+    // const saveEdit = (id: string) => {
+    //     dispatch(updateChat{ id, name: editName }));
+    //     setEditingChatId(null);
+    // };
 
     if(loading){
         return <Loader />;

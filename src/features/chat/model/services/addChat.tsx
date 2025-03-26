@@ -5,11 +5,11 @@ import {Chat} from "@/features/chat/model/types/chatSchema.ts";
 
 
 
-export const addChat = createAsyncThunk<Chat, string, ThunkConfig>(
+export const addChat = createAsyncThunk<Chat, void, ThunkConfig>(
     'chats/addChats',
-    async (chatName,{rejectWithValue, extra}) => {
+    async (_,{rejectWithValue, extra}) => {
         try{
-            const response = await extra.api.post(`/chat`, {name: chatName});
+            const response = await extra.api.post(`/chat`, {name: "Новый чат"});
             if (!response.data) {
                 throw new Error('Ошибка при создании чата');
             }
