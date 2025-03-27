@@ -4,6 +4,8 @@ import {ThunkConfig} from "@/app/providers/StoreProvider";
 
 
 
+
+
 export const fetchChats = createAsyncThunk<Chat[], void, ThunkConfig>(
     'chats/fetchChats',
     async (_,{rejectWithValue, extra}) => {

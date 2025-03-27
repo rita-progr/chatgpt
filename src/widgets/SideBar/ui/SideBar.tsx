@@ -2,8 +2,8 @@ import cls from './SideBar.module.scss';
 import {classNames} from "@/shared/lib/classNames/classNames";
 import {useAppDispatch} from "@/shared/lib/hooks/appDispatch/appDispatch.ts";
 import {useSelector} from "react-redux";
-import {addChat, Chat,  DeleteChatButton, fetchChats, getChatsList, updateChat} from "@/features/chat";
-import {useEffect, useState} from "react";
+import {addChat, chatActions, DeleteChatButton, fetchChats, getChatsList} from "@/features/chat";
+import {useEffect} from "react";
 import logo from '@/shared/assets/logo.svg'
 import languageSw from '@/shared/assets/language.svg'
 import addChatIcon from '@/shared/assets/add-chat.svg'
@@ -24,6 +24,10 @@ export const SideBar = ({className}:SideBarProps) => {
     const loading = useSelector(getUserLoading);
     const error = useSelector(getUserError);
 
+    const handleSelectChat = (chatId: string) => {
+        dispatch(chatActions.setCurrentChat(chatId));
+        // Можно также загрузить сообщения для этого чата
+    };
     // const [editingChatId, setEditingChatId] = useState<string | null>(null);
     // const [editName, setEditName] = useState("");
     //
@@ -73,8 +77,8 @@ export const SideBar = ({className}:SideBarProps) => {
                     <div className={cls.chatsList}>
                         <ul>
                             {chats?.map((chat: any) => (
-                                <li key={chat.id} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                                    {chat.name}
+                                <li key={chat.id} className={cls.chatItem}  onClick={() => handleSelectChat(chat.id)}>
+                                    <p className={cls.item}>{chat.name}</p>
                                     <DeleteChatButton chatId={chat.id} />
                                 </li>
                             ))}

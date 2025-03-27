@@ -1,4 +1,4 @@
-import {createSlice} from "@reduxjs/toolkit";
+import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {ChatSchema} from "../types/chatSchema.ts";
 import {fetchChats} from "../services/fetchChats.tsx";
 import {addChat} from "../services/addChat.tsx";
@@ -9,12 +9,20 @@ const initialState: ChatSchema = {
     chats: [],
     loading: false,
     error: null,
+    currentChatId: null,
 }
 
 export const chatSlice = createSlice({
     name:'chat',
     initialState,
-    reducers:{},
+    reducers:{
+        setCurrentChat: (state, action: PayloadAction<string>)=>{
+            state.currentChatId = action.payload;
+        },
+        clearCurrentChat: (state) => {
+            state.currentChatId = null;
+        },
+    },
     extraReducers:(builder) => {
         builder
             .addCase(fetchChats.pending, (state)=>{

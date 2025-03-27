@@ -6,3 +6,4 @@ export {addChat} from "./model/services/addChat.tsx";
 export {DeleteChatButton} from "./ui/DeleteChatButton.tsx";
 export type {Chat, ChatSchema} from "./model/types/chatSchema.ts";
 export{getChatsList} from "./model/selectors/getChats/getChatsList.tsx";
+export {getChatId} from "./model/selectors/getChatId/getChatId.ts";

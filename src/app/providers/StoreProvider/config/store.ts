@@ -2,10 +2,10 @@ import {StateSchema, ThunkExtraArgs} from "./StateSchema.ts";
 import {configureStore, ReducersMapObject} from "@reduxjs/toolkit";
 import {NavigateOptions, To} from "react-router-dom";
 import {$api} from "@/shared/api/api";
-// import {IS_DEV} from "@/shared/const/global.ts";
 import {userReducer} from "@/entities/User";
 import {createReducerManager} from "./reducerManager.tsx";
 import {chatReducer} from "@/features/chat";
+import {messageReducer} from "@/features/Message";
 
 export const createReduxStore = (initialState?: StateSchema,asyncReducers?: ReducersMapObject<StateSchema>, navigate?:  (to: To, options?: NavigateOptions) => void | Promise<void>)=>{
     const extraArg: ThunkExtraArgs = {
@@ -16,6 +16,7 @@ export const createReduxStore = (initialState?: StateSchema,asyncReducers?: Redu
     const rootReducer: ReducersMapObject<StateSchema> = {
         ...asyncReducers,
         user: userReducer,
+        message: messageReducer,
         chat: chatReducer
     }
 

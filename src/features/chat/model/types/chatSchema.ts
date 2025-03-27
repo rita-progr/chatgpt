@@ -7,4 +7,5 @@ export interface ChatSchema {
     chats: Chat[];
     loading: boolean;
     error: string| null;
+    currentChatId: string | null;
 }

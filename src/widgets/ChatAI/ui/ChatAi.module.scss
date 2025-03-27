@@ -1,0 +1,19 @@
+.ChatAi{
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 2rem);
+  justify-content: space-between;
+  padding: 1.5rem 4rem;
+  background: var(--bg-color-content);
+  border-radius: 1rem;
+}
+.content{
+  height: 100%;
+}
+.loader{
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

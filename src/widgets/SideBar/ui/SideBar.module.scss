@@ -4,8 +4,8 @@
 .SideBar{
   display: flex;
   flex-direction: column;
-  height: 100vh; // Занимает всю высоту экрана
-  justify-content: space-between; // Распределяет пространство между элементами
+  height: calc(100vh - 2rem);
+  justify-content: space-between;
   max-width: 25rem;
   width: 100%;
   background: var(--bg-color-content);
@@ -39,4 +39,17 @@
 }
 .searchChatBtn{
   border: 1px solid var(--border-color-input)
+}
+.chatItem{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 25rem;
+  width: 100%;
+  overflow: hidden;
+}
+.item{
+  max-width: 23rem;
+  width: 100%;
+  overflow: hidden;
 }

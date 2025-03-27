@@ -3,8 +3,8 @@ import {createAsyncThunk} from "@reduxjs/toolkit";
 import {Chat} from "@/features/chat";
 
 export const updateChat = createAsyncThunk<
-    Chat, // Возвращаемый тип (обновленный чат)
-    { chatId: string; newName: string }, // Параметры (ID чата и новое имя)
+    Chat,
+    { chatId: string; newName: string },
     ThunkConfig
 >('chats/updateChat', async ({ chatId, newName }, { extra, rejectWithValue }) => {
     try {
@@ -14,7 +14,7 @@ export const updateChat = createAsyncThunk<
             throw new Error('Ошибка при обновлении чата');
         }
 
-        return response.data; // Возвращаем обновленный чат
+        return response.data;
     } catch (err) {
         console.error(err);
         return rejectWithValue('Не удалось обновить название чата');

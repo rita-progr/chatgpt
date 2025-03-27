@@ -5,11 +5,12 @@ import {AnyAction, EnhancedStore, Reducer, ReducersMapObject} from "@reduxjs/too
 import {CombinedState} from "@reduxjs/toolkit/query";
 import {AuthByUserNameSchema} from "@/features/AuthByUserName";
 import {ChatSchema} from "@/features/chat/model/types/chatSchema.ts";
+import {MessageState} from "@/features/Message";
 
 export interface StateSchema {
-    // counter: CounterSchema
     user: UserSchema
     chat: ChatSchema
+    message: MessageState
     login?: AuthByUserNameSchema
 }
 

@@ -1,0 +1,25 @@
+.messageInputContainer{
+  display: flex;
+  justify-content: space-between;
+  border: 1px solid var(--border-color-input);
+  background: var(--bg-color-input);
+  align-items: center;
+  padding-right:1rem;
+  border-radius: 0.8rem;
+}
+.messageInput{
+  width: 100%;
+}
+.messageInputReset{
+  margin:1.2rem !important ;
+  border-radius: 0.8rem;
+  padding: 0 !important ;
+  border: none !important;
+}
+.btn{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.3rem;
+  height: 2.3rem;
+}
