@@ -19,7 +19,7 @@ const ChatPage = ({className}:ChatPageProps) => {
         <div className={classNames(cls.ChatPage, {},[className])}>
             <SideBar/>
             <div className={cls.windowChat}>
-                <ChatAi chatId={chatId}/>
+                <ChatAi chat_id={chatId}/>
             </div>
 
         </div>

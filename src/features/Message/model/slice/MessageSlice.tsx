@@ -45,7 +45,7 @@ const messageSlice = createSlice({
                 state.loading = false;
 
                 state.messages = [
-                    ...state.messages.filter(m => m.chatId !== state.currentChatId),
+                    ...state.messages.filter(m => m.chat_id !== state.currentChatId),
                     ...action.payload
                 ];
             })

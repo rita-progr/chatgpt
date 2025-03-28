@@ -8,16 +8,13 @@ interface MessageItemProps {
 
 export const MessageItem = ({ message }: MessageItemProps) => {
     return (
-        <div className={cls.msgCont} style = {{ alignSelf: message.sender === 'user' ? 'flex-end' : 'flex-start'}}>
+        <div className={cls.msgCont} style = {{ alignSelf: message.role === 'user' ? 'flex-end' : 'flex-start'}}>
             <div
-                className={cls.Message}
-                style={{
-                    background: message.sender === 'user' ? 'rgba(71,133,255,0.5)' : '#ffffff',
-                }}
+                className={message.role === 'user'? cls.UserMes : cls.AiMes}
             >
-                <p className={cls.text}>{message.text}</p>
+                <p className={cls.text}>{message.content}</p>
                 <p style={{color: '#FFF', fontSize: '8px', textAlign: 'right'}}>
-                    {new Date(message.timestamp).toLocaleTimeString()}
+                    {/*{new Date(message).toLocaleTimeString()}*/}
                 </p>
             </div>
         </div>

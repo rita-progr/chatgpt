@@ -1,17 +1,28 @@
-.Message{
+ .UserMes, ,.AiMes{
   overflow-y: auto;
   display: flex;
   padding: 10px;
   flex-direction: column;
   margin: 0.2rem 0;
-  border-bottom-left-radius: 10px;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
+
 }
+
+.UserMes{
+  border-bottom-left-radius: 10px;
+  background-color: rgba(71,133,255,0.5);
+}
+ .AiMes{
+   border-bottom-right-radius: 10px;
+   background: none;
+ }
+
 .msgCont{
   display: flex;
 
 }
+
 .text{
   margin-right:3rem;
   //margin-bottom:0.5rem;

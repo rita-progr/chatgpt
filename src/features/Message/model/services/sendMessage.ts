@@ -2,20 +2,20 @@ import {createAsyncThunk} from "@reduxjs/toolkit";
 import {Message} from "../types/MessageType.tsx";
 import {ThunkConfig} from "@/app/providers/StoreProvider";
 
-export const sendMessage = createAsyncThunk<Message, {chatId:string, text: string}, ThunkConfig>(
+export const sendMessage = createAsyncThunk<Message, {chat_id:string, content: string}, ThunkConfig>(
     'message/sendMessage',
-    async ({chatId, text}, {extra,rejectWithValue}) => {
+    async ({chat_id, content}, {extra,rejectWithValue}) => {
         try {
             const response = await extra.api.post<Message>('/message/send', {
-                chatId,
-                message: text,
-                stream: true
+                chatId: chat_id,
+                message: content,
             });
+
             return {
                 id: response.data.id || Date.now().toString(),
-                chatId,
-                text: response.data.text,
-                sender: 'user',
+                chat_id,
+                content: response.data.content,
+                role: response.data.role,
                 timestamp: new Date().toISOString(),
             };
         }

@@ -21,34 +21,34 @@ import {CustomText, TextAlign, TextTheme} from "@/shared/ui/CustomText/CustomTex
 
 interface ChatAiProps{
     className?: string;
-    chatId: string;
+    chat_id: string;
 }
 
-export const ChatAi = ({className, chatId}:ChatAiProps) => {
+export const ChatAi = ({className, chat_id}:ChatAiProps) => {
     const dispatch = useAppDispatch();
     const loading = useSelector(getMessageLoading);
     const error = useSelector(getMessageError);
     const messages = useSelector(getMessages);
 
     useEffect(() => {
-        dispatch(messageActions.setCurrentChat(chatId));
-        dispatch(fetchMessages(chatId));
-        const cleanup = dispatch(messageStream(chatId));
+        dispatch(messageActions.setCurrentChat(chat_id));
+        dispatch(fetchMessages(chat_id));
+        const cleanup = dispatch(messageStream(chat_id));
 
         return () => cleanup();
-    }, [chatId, dispatch]);
+    }, [chat_id, dispatch]);
 
-    const handleSend = (text: string) => {
+    const handleSend = (content: string) => {
         dispatch(messageActions.addLocalMessage({
             id: `temp-${Date.now()}`,
-            chatId,
-            text,
-            sender: 'user',
+            chat_id,
+            content,
+            role: 'user',
             timestamp: new Date().toISOString(),
             status: 'pending',
         }));
 
-        dispatch(sendMessage({ chatId, text }));
+        dispatch(sendMessage({ chat_id, content }));
     };
 
     return (
@@ -57,7 +57,7 @@ export const ChatAi = ({className, chatId}:ChatAiProps) => {
             <div className={classNames(cls.ChatAi, {},[className])}>
                 <div className={cls.content}>
                     {error && <CustomText align={TextAlign.CENTER} theme={TextTheme.ERROR} title ='Произошла ошибка при загрузке чата'/>}
-                    <MessageList messages={messages.filter(m => m.chatId === chatId)} />
+                    <MessageList messages={messages.filter(m => m.chat_id === chat_id)} />
                 </div>
                 <MessageInput onSend={handleSend} />
             </div>

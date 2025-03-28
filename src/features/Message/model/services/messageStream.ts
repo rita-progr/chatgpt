@@ -10,7 +10,7 @@ export const messageStream = (chatId: string) => (dispatch: AppDispatch) => {
         const data = JSON.parse(event.data) as Message;
         dispatch(messageActions.addLocalMessage({
             ...data,
-            sender: 'AI',
+            role: 'assistant',
             timestamp: new Date().toISOString(),
         }));
     };
