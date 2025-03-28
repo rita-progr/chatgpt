@@ -11,9 +11,12 @@ export interface Message {
     tokens?:string|number;
 }
 
+export type MessageStatus = 'pending' | 'delivered' | 'read' | 'error';
+
 export interface MessageState {
     messages: Message[];
     loading: boolean;
     error:null|string;
     currentChatId: null|string;
+    isConnected: boolean;
 }

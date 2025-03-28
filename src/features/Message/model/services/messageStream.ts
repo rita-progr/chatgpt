@@ -1,25 +1,59 @@
+import { AppDispatch } from "@/app/providers/StoreProvider";
+import { messageActions } from "@/features/Message";
+import {EventSource} from 'eventsource'
 
-import { messageActions } from '../slice/MessageSlice.tsx';
-import {Message} from "../types/MessageType.tsx";
-import {AppDispatch} from "@/app/providers/StoreProvider";
+// interface SseMessage {
+//     id: string;
+//     chat_id: string;
+//     content: string;
+//     role: "user" | "assistant";
+//     created_at: string;
+//     status?: string;
+// }
 
-export const messageStream = (chatId: string) => (dispatch: AppDispatch) => {
-    const eventSource = new EventSource(`/chat/${chatId}/stream`);
 
+export const messageStream = (chatId: string, token: string) => (dispatch: AppDispatch) => {
+    if (!chatId) {
+        dispatch(messageActions.setError('Chat ID is required'));
+        return () => {};
+    }
+
+    // Правильный URL (без дублирования параметров)
+    const url = new URL(`https://bothubq.com/api/v2/chat/${chatId}/stream`);
+
+
+    const eventSource = new EventSource(url.toString(),  {
+        fetch: (input, init) =>
+            fetch(input, {
+                ...init,
+                headers: {
+                    ...init?.headers,
+                    Authorization: `Bearer ${token}`,
+                },
+            })
+    }
+    );
+
+
+    console.log("Connecting to SSE:", url.toString());
     eventSource.onmessage = (event) => {
-        const data = JSON.parse(event.data) as Message;
-        dispatch(messageActions.addLocalMessage({
-            ...data,
-            role: 'assistant',
-            timestamp: new Date().toISOString(),
-        }));
+        try {
+            const data = JSON.parse(event.data);
+            console.log(data.data.message);
+            dispatch(messageActions.addMessage(({
+                content: data.data.message.content,
+                chat_id: chatId,
+                // timestamp:data.data.message.created_at,
+                role: 'assistant',
+            })));
+        } catch (error) {
+            console.error('SSE parse error:', error);
+        }
     };
 
     eventSource.onerror = () => {
-        eventSource.close();
+        dispatch(messageActions.setError('SSE connection error'));
     };
 
-    return () => {
-        eventSource.close();
-    };
+    return () => eventSource.close();
 };

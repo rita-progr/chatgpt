@@ -17,6 +17,7 @@ import {
 import {useEffect} from "react";
 import {Loader} from "@/shared/ui/Loader/Loader.tsx";
 import {CustomText, TextAlign, TextTheme} from "@/shared/ui/CustomText/CustomText.tsx";
+import {API_TOKEN} from "@/shared/api/api.ts";
 
 
 interface ChatAiProps{
@@ -30,13 +31,14 @@ export const ChatAi = ({className, chat_id}:ChatAiProps) => {
     const error = useSelector(getMessageError);
     const messages = useSelector(getMessages);
 
+
     useEffect(() => {
         dispatch(messageActions.setCurrentChat(chat_id));
         dispatch(fetchMessages(chat_id));
-        const cleanup = dispatch(messageStream(chat_id));
-
+        const cleanup = dispatch(messageStream(chat_id, API_TOKEN ));
         return () => cleanup();
     }, [chat_id, dispatch]);
+
 
     const handleSend = (content: string) => {
         dispatch(messageActions.addLocalMessage({
