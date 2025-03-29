@@ -17,8 +17,8 @@ export const MessageList = ({ messages, className }: MessageListProps) => {
             { messages.length === 0 && (
              <div className={cls.notFoundMsg}>Нет сообщений</div>
             )}
-            {messages.map((message) => (
-                <MessageItem key={message.id} message={message} />
+            {messages.map((message, index) => (
+                <MessageItem key={index} message={message} />
             ))}
         </div>
     );

@@ -10,7 +10,7 @@ const initialState: MessageState = {
     error: null,
     currentChatId: null,
     isConnected: false,
-    loadingMes:false
+    currentLoadingMessageId: null
 };
 
 const messageSlice = createSlice({
@@ -20,17 +20,18 @@ const messageSlice = createSlice({
         addLocalMessage: (state, action: PayloadAction<Message>) => {
             state.messages.push(action.payload);
         },
-        loadMessages: (state) => {
-            state.loadingMes = true;
+        loadMessages: (state, action: PayloadAction<string | null>) => {
+            state.currentLoadingMessageId = action.payload;
         },
         addMessage: (state, action: PayloadAction<{
             chat_id: string;
             content: string;
-            timestamp?: string;
+            timestamp: string;
             role: "user" | "assistant";
+            id:string;
             // status?: MessageStatus;
         }>) => {
-            state.loadingMes = false;
+            state.currentLoadingMessageId = null;
             state.messages.push(action.payload);
         },
         setCurrentChat: (state, action: PayloadAction<string>) => {

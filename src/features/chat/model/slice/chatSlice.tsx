@@ -4,6 +4,7 @@ import {fetchChats} from "../services/fetchChats.tsx";
 import {addChat} from "../services/addChat.tsx";
 import {deleteChat} from "../services/deleteChat.tsx";
 import {updateChat} from "@/features/chat/model/services/updateChat.tsx";
+import {CHAT_ID_LOCALSTORAGE} from "@/shared/const/global.ts";
 
 const initialState: ChatSchema = {
     chats: [],
@@ -18,10 +19,14 @@ export const chatSlice = createSlice({
     reducers:{
         setCurrentChat: (state, action: PayloadAction<string>)=>{
             state.currentChatId = action.payload;
+            localStorage.setItem(CHAT_ID_LOCALSTORAGE, JSON.stringify(action.payload));
         },
         clearCurrentChat: (state) => {
             state.currentChatId = null;
         },
+        initCurrentChat:(state) => {
+            state.currentChatId = JSON.parse(localStorage.getItem(CHAT_ID_LOCALSTORAGE)  as string)
+        }
     },
     extraReducers:(builder) => {
         builder

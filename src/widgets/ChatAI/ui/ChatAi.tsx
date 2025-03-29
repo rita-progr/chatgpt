@@ -35,12 +35,12 @@ export const ChatAi = ({className, chat_id}:ChatAiProps) => {
     useEffect(() => {
         dispatch(messageActions.setCurrentChat(chat_id));
         dispatch(fetchMessages(chat_id));
-        const cleanup = dispatch(messageStream(chat_id, API_TOKEN ));
-        return () => cleanup();
+
     }, [chat_id, dispatch]);
 
 
     const handleSend = (content: string) => {
+        const messageId = `temp-${Date.now()}`;
         dispatch(messageActions.addLocalMessage({
             id: `temp-${Date.now()}`,
             chat_id,
@@ -49,8 +49,13 @@ export const ChatAi = ({className, chat_id}:ChatAiProps) => {
             timestamp: new Date().toISOString(),
             status: 'pending',
         }));
-
         dispatch(sendMessage({ chat_id, content }));
+        dispatch(messageActions.loadMessages(messageId));
+        const cleanup = dispatch(messageStream(chat_id, API_TOKEN, messageId));
+        return () => {
+            console.log("Closing EventSource connection");
+            cleanup();
+        };
     };
 
     return (
@@ -58,7 +63,7 @@ export const ChatAi = ({className, chat_id}:ChatAiProps) => {
             {loading && <div className={cls.loader}> <Loader /></div>}
             <div className={classNames(cls.ChatAi, {},[className])}>
                 <div className={cls.content}>
-                    {error && <CustomText align={TextAlign.CENTER} theme={TextTheme.ERROR} title ='Произошла ошибка при загрузке чата, пожалуйста выберите чат'/>}
+                    {!chat_id &&  error && <CustomText align={TextAlign.CENTER} theme={TextTheme.ERROR} title ='Произошла ошибка при загрузке чата, пожалуйста выберите чат'/>}
                     <MessageList messages={messages.filter(m => m.chat_id === chat_id)} />
                 </div>
                 <MessageInput onSend={handleSend} />

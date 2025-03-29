@@ -4,6 +4,7 @@ import { ChatPage } from "pages/ChatPage";
 import { getUserName, userActions } from "@/entities/User";
 import { useAppDispatch } from "@/shared/lib/hooks/appDispatch/appDispatch.ts";
 import { useSelector } from "react-redux";
+import {chatActions} from "@/features/chat";
 
 function App() {
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -13,6 +14,7 @@ function App() {
 
     useEffect(() => {
         dispatch(userActions.initAuthData())
+        dispatch(chatActions.initCurrentChat())
     }, [dispatch]);
 
     const onClose = useCallback(() => {
@@ -25,10 +27,6 @@ function App() {
             setIsModalOpen(true);
         }
     }, [userName,]);
-
-    // if (isLoading) {
-    //     return <div>Loading...</div>; // Или лоадер
-    // }
 
     return (
         <div>

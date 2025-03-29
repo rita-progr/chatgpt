@@ -20,7 +20,9 @@
 
 .msgCont{
   display: flex;
-
+  gap:0.5rem;
+  align-items: end;
+  max-width: 94%;
 }
 
 .text{

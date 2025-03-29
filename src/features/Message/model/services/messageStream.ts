@@ -12,13 +12,13 @@ import {EventSource} from 'eventsource'
 // }
 
 
-export const messageStream = (chatId: string, token: string) => (dispatch: AppDispatch) => {
+export const messageStream = (chatId: string, token: string, messageId: string) => (dispatch: AppDispatch) => {
     if (!chatId) {
         dispatch(messageActions.setError('Chat ID is required'));
         return () => {};
     }
 
-    // Правильный URL (без дублирования параметров)
+
     const url = new URL(`https://bothubq.com/api/v2/chat/${chatId}/stream`);
 
 
@@ -34,16 +34,15 @@ export const messageStream = (chatId: string, token: string) => (dispatch: AppDi
     }
     );
 
-
     console.log("Connecting to SSE:", url.toString());
     eventSource.onmessage = (event) => {
         try {
             const data = JSON.parse(event.data);
-            dispatch(messageActions.loadMessages());
             console.log(data.data);
             if(data?.data?.message?.job?.status == 'DONE'){
                 console.log('done');
                 dispatch(messageActions.addMessage(({
+                    id: messageId,
                     content: data.data.message.content,
                     chat_id: chatId,
                     timestamp:data.data.message.job.created_at,
@@ -60,5 +59,9 @@ export const messageStream = (chatId: string, token: string) => (dispatch: AppDi
         dispatch(messageActions.setError('SSE connection error'));
     };
 
-    return () => eventSource.close();
+    return ()=> {
+
+        console.log("Closing EventSource");
+        eventSource.close();
+    }
 };

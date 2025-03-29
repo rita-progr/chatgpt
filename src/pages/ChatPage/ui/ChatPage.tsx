@@ -14,6 +14,7 @@ interface ChatPageProps{
 const ChatPage = ({className}:ChatPageProps) => {
 
     const chatId = useSelector(getChatId)
+    console.log(chatId);
 
     return (
         <div className={classNames(cls.ChatPage, {},[className])}>

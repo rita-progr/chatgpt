@@ -19,5 +19,5 @@ export interface MessageState {
     error:null|string;
     currentChatId: null|string;
     isConnected: boolean;
-    loadingMes:boolean;
+    currentLoadingMessageId: null | string;
 }
