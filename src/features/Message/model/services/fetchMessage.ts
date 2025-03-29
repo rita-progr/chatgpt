@@ -16,7 +16,7 @@ export const fetchMessages = createAsyncThunk<
             return response.data.data.map(msg => ({
                 content: msg.content,
                 chat_id: chatId,
-                time:msg.created_at,
+                timestamp:msg.created_at,
                 role: msg.role === 'assistant' ? 'assistant' : 'user',
             })).reverse();
 

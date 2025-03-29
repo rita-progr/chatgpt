@@ -5,7 +5,7 @@ export interface Message {
     chat_id: string;
     content: string;
     role?: 'user' | 'assistant';
-    timestamp?: string;
+    timestamp: string;
     status?: 'pending' | 'delivered' | 'read';
     model?: string;
     tokens?:string|number;
@@ -19,4 +19,5 @@ export interface MessageState {
     error:null|string;
     currentChatId: null|string;
     isConnected: boolean;
+    loadingMes:boolean;
 }

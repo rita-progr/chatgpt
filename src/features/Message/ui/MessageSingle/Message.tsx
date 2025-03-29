@@ -14,7 +14,7 @@ export const MessageItem = ({ message }: MessageItemProps) => {
             >
                 <p className={cls.text}>{message.content}</p>
                 <p style={{color: '#FFF', fontSize: '8px', textAlign: 'right'}}>
-                    {/*{new Date(message).toLocaleTimeString()}*/}
+                    {new Date(message?.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false })}
                 </p>
             </div>
         </div>

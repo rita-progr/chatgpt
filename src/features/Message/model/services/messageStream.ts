@@ -39,13 +39,14 @@ export const messageStream = (chatId: string, token: string) => (dispatch: AppDi
     eventSource.onmessage = (event) => {
         try {
             const data = JSON.parse(event.data);
+            dispatch(messageActions.loadMessages());
             console.log(data.data);
             if(data?.data?.message?.job?.status == 'DONE'){
                 console.log('done');
                 dispatch(messageActions.addMessage(({
                     content: data.data.message.content,
                     chat_id: chatId,
-                    // timestamp:data.data.message.created_at,
+                    timestamp:data.data.message.job.created_at,
                     role: 'assistant',
                 })));
             }

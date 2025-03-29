@@ -10,6 +10,7 @@ const initialState: MessageState = {
     error: null,
     currentChatId: null,
     isConnected: false,
+    loadingMes:false
 };
 
 const messageSlice = createSlice({
@@ -19,19 +20,17 @@ const messageSlice = createSlice({
         addLocalMessage: (state, action: PayloadAction<Message>) => {
             state.messages.push(action.payload);
         },
+        loadMessages: (state) => {
+            state.loadingMes = true;
+        },
         addMessage: (state, action: PayloadAction<{
             chat_id: string;
             content: string;
             timestamp?: string;
+            role: "user" | "assistant";
             // status?: MessageStatus;
         }>) => {
-            // const { chat_id } = action.payload;
-            // // @ts-ignore
-            // if (!state.messages[chat_id]) {
-            //     // @ts-ignore
-            //     state.messages[chat_id] = [];
-            // }
-
+            state.loadingMes = false;
             state.messages.push(action.payload);
         },
         setCurrentChat: (state, action: PayloadAction<string>) => {
@@ -80,7 +79,9 @@ const messageSlice = createSlice({
             .addCase(fetchMessages.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.payload || 'Unknown error';
-            });
+            })
+
+
     },
 });
 
