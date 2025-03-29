@@ -4,7 +4,7 @@ export interface Message {
     id?: string;
     chat_id: string;
     content: string;
-    role: 'user' | 'assistant';
+    role?: 'user' | 'assistant';
     timestamp?: string;
     status?: 'pending' | 'delivered' | 'read';
     model?: string;

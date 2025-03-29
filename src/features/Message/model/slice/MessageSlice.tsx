@@ -1,5 +1,5 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
-import {Message, MessageState, MessageStatus} from '../types/MessageType.tsx';
+import {Message, MessageState} from '../types/MessageType.tsx';
 import {sendMessage} from "../services/sendMessage.ts";
 import {fetchMessages} from "../services/fetchMessage.ts";
 
@@ -20,21 +20,19 @@ const messageSlice = createSlice({
             state.messages.push(action.payload);
         },
         addMessage: (state, action: PayloadAction<{
-            id?: string;
             chat_id: string;
             content: string;
-            role: 'user' | 'assistant';
             timestamp?: string;
-            status?: MessageStatus;
+            // status?: MessageStatus;
         }>) => {
-            const { chat_id } = action.payload;
-            // @ts-ignore
-            if (!state.messages[chat_id]) {
-                // @ts-ignore
-                state.messages[chat_id] = [];
-            }
-            // @ts-ignore
-            state.messages[chat_id].push(action.payload);
+            // const { chat_id } = action.payload;
+            // // @ts-ignore
+            // if (!state.messages[chat_id]) {
+            //     // @ts-ignore
+            //     state.messages[chat_id] = [];
+            // }
+
+            state.messages.push(action.payload);
         },
         setCurrentChat: (state, action: PayloadAction<string>) => {
             state.currentChatId = action.payload;
