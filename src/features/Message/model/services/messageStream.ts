@@ -39,13 +39,16 @@ export const messageStream = (chatId: string, token: string) => (dispatch: AppDi
     eventSource.onmessage = (event) => {
         try {
             const data = JSON.parse(event.data);
-            console.log(data.data.message);
-            dispatch(messageActions.addMessage(({
-                content: data.data.message.content,
-                chat_id: chatId,
-                // timestamp:data.data.message.created_at,
-                role: 'assistant',
-            })));
+            console.log(data.data);
+            if(data?.message?.job?.status == 'DONE'){
+                dispatch(messageActions.addMessage(({
+                    content: data.data.message.content,
+                    chat_id: chatId,
+                    // timestamp:data.data.message.created_at,
+                    role: 'assistant',
+                })));
+            }
+
         } catch (error) {
             console.error('SSE parse error:', error);
         }
