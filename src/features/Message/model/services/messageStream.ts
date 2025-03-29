@@ -40,7 +40,8 @@ export const messageStream = (chatId: string, token: string) => (dispatch: AppDi
         try {
             const data = JSON.parse(event.data);
             console.log(data.data);
-            if(data?.message?.job?.status == 'DONE'){
+            if(data?.data?.message?.job?.status == 'DONE'){
+                console.log('done');
                 dispatch(messageActions.addMessage(({
                     content: data.data.message.content,
                     chat_id: chatId,
