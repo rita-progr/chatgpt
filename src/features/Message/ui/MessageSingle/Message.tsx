@@ -12,7 +12,12 @@ interface MessageItemProps {
 export const MessageItem = ({ message }: MessageItemProps) => {
     const loadingMessages = useSelector(getLoadMessage);
     const aiLoading = loadingMessages === message.id;
+    console.log(message.id)
+    console.log(loadingMessages)
     console.log(aiLoading);
+    if (!message?.content?.trim()) {
+        return null;
+    }
     return (
         <>
             <div className={cls.msgCont} style = {{ alignSelf: message.role === 'user' ? 'flex-end' : 'flex-start'}}>

@@ -30,6 +30,7 @@ export const ChatAi = ({className, chat_id}:ChatAiProps) => {
     const loading = useSelector(getMessageLoading);
     const error = useSelector(getMessageError);
     const messages = useSelector(getMessages);
+    console.log(messages);
 
 
     useEffect(() => {
@@ -44,7 +45,7 @@ export const ChatAi = ({className, chat_id}:ChatAiProps) => {
         dispatch(messageActions.addLocalMessage({
             id: `temp-${Date.now()}`,
             chat_id,
-            content,
+            content: content,
             role: 'user',
             timestamp: new Date().toISOString(),
             status: 'pending',

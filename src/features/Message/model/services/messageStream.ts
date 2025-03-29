@@ -39,6 +39,10 @@ export const messageStream = (chatId: string, token: string, messageId: string) 
         try {
             const data = JSON.parse(event.data);
             console.log(data.data);
+            if (!data?.data?.message?.content) {
+                console.warn('Empty message received from server:', data);
+                return;
+            }
             if(data?.data?.message?.job?.status == 'DONE'){
                 console.log('done');
                 dispatch(messageActions.addMessage(({
