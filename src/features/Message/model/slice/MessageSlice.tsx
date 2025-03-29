@@ -10,7 +10,8 @@ const initialState: MessageState = {
     error: null,
     currentChatId: null,
     isConnected: false,
-    currentLoadingMessageId: null
+    currentLoading: false
+
 };
 
 const messageSlice = createSlice({
@@ -20,8 +21,8 @@ const messageSlice = createSlice({
         addLocalMessage: (state, action: PayloadAction<Message>) => {
             state.messages.push(action.payload);
         },
-        loadMessages: (state, action: PayloadAction<string | null>) => {
-            state.currentLoadingMessageId = action.payload;
+        loadMessages: (state) => {
+            state.currentLoading = true;
         },
         addMessage: (state, action: PayloadAction<{
             chat_id: string;
@@ -31,7 +32,7 @@ const messageSlice = createSlice({
             id:string;
             // status?: MessageStatus;
         }>) => {
-            state.currentLoadingMessageId = null;
+            state.currentLoading = false;
             state.messages.push(action.payload);
         },
         setCurrentChat: (state, action: PayloadAction<string>) => {

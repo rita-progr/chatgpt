@@ -33,6 +33,7 @@ export const messageStream = (chatId: string, token: string, messageId: string) 
             })
     }
     );
+    dispatch(messageActions.loadMessages())
 
     console.log("Connecting to SSE:", url.toString());
     eventSource.onmessage = (event) => {

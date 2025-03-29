@@ -51,7 +51,6 @@ export const ChatAi = ({className, chat_id}:ChatAiProps) => {
             status: 'pending',
         }));
         dispatch(sendMessage({ chat_id, content }));
-        dispatch(messageActions.loadMessages(messageId));
         const cleanup = dispatch(messageStream(chat_id, API_TOKEN, messageId));
         return () => {
             console.log("Closing EventSource connection");
