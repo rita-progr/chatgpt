@@ -4,7 +4,6 @@ import {MessageItem} from "../MessageSingle/Message.tsx";
 import {classNames} from "@/shared/lib/classNames/classNames.tsx";
 import {useSelector} from "react-redux";
 import {getLoadMessage} from "@/features/Message";
-import {Loader} from "@/shared/ui/Loader/Loader.tsx";
 
 
 interface MessageListProps {
