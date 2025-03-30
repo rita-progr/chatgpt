@@ -2,17 +2,16 @@ import { AppDispatch } from "@/app/providers/StoreProvider";
 import { messageActions } from "@/features/Message";
 import {EventSource} from 'eventsource'
 
-// interface SseMessage {
-//     id: string;
-//     chat_id: string;
-//     content: string;
-//     role: "user" | "assistant";
-//     created_at: string;
-//     status?: string;
-// }
-
+let activeEventSource: EventSource | null = null;
 
 export const messageStream = (chatId: string, token: string, messageId: string) => (dispatch: AppDispatch) => {
+
+    if (activeEventSource) {
+        activeEventSource.close();
+        activeEventSource = null;
+    }
+
+
     if (!chatId) {
         dispatch(messageActions.setError('Chat ID is required'));
         return () => {};
@@ -22,7 +21,7 @@ export const messageStream = (chatId: string, token: string, messageId: string) 
     const url = new URL(`https://bothubq.com/api/v2/chat/${chatId}/stream`);
 
 
-    const eventSource = new EventSource(url.toString(),  {
+    activeEventSource = new EventSource(url.toString(),  {
         fetch: (input, init) =>
             fetch(input, {
                 ...init,
@@ -36,7 +35,7 @@ export const messageStream = (chatId: string, token: string, messageId: string) 
     dispatch(messageActions.loadMessages())
 
     console.log("Connecting to SSE:", url.toString());
-    eventSource.onmessage = (event) => {
+    activeEventSource.onmessage = (event) => {
         try {
             const data = JSON.parse(event.data);
             console.log(data.data);
@@ -60,13 +59,13 @@ export const messageStream = (chatId: string, token: string, messageId: string) 
         }
     };
 
-    eventSource.onerror = () => {
+    activeEventSource.onerror = () => {
         dispatch(messageActions.setError('SSE connection error'));
     };
 
     return ()=> {
 
         console.log("Closing EventSource");
-        eventSource.close();
+        activeEventSource?.close();
     }
 };
