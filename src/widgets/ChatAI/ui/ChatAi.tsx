@@ -14,10 +14,13 @@ import {
     messageStream,
     sendMessage
 } from "@/features/Message";
-import {useEffect} from "react";
+import {useEffect, useState} from "react";
 import {Loader} from "@/shared/ui/Loader/Loader.tsx";
 import {CustomText, TextAlign, TextTheme} from "@/shared/ui/CustomText/CustomText.tsx";
 import {API_TOKEN} from "@/shared/api/api.ts";
+import {Burger} from "@/widgets/BurgerBtn/ui/Burger.tsx";
+import {SideBar} from "@/widgets/SideBar";
+import {useMediaQuery} from "react-responsive";
 
 
 interface ChatAiProps{
@@ -30,8 +33,14 @@ export const ChatAi = ({className, chat_id}:ChatAiProps) => {
     const loading = useSelector(getMessageLoading);
     const error = useSelector(getMessageError);
     const messages = useSelector(getMessages);
-    console.log(messages);
+    const [isOpen, setIsOpen] = useState(false);
+    const isSmall = useMediaQuery({maxWidth: 980});
 
+
+
+    const toggleMenu = () => {
+        setIsOpen(!isOpen);
+    };
 
     useEffect(() => {
         dispatch(messageActions.setCurrentChat(chat_id));
@@ -62,11 +71,24 @@ export const ChatAi = ({className, chat_id}:ChatAiProps) => {
         <>
             {loading && <div className={cls.loader}> <Loader /></div>}
             <div className={classNames(cls.ChatAi, {},[className])}>
-                <div className={cls.content}>
-                    {!chat_id &&  error && <CustomText align={TextAlign.CENTER} theme={TextTheme.ERROR} title ='Произошла ошибка при загрузке чата, пожалуйста выберите чат'/>}
-                    <MessageList messages={messages.filter(m => m.chat_id === chat_id)} />
+                <div className={cls.btn}>
+                    {isSmall && <Burger onToggle={toggleMenu} open={isOpen} /> }
                 </div>
-                <MessageInput onSend={handleSend} />
+                {isOpen ? (
+                    <>
+                        <SideBar/>
+                    </>
+                ): (
+                    <>
+                        <div className={cls.content}>
+                            {!chat_id && error && <CustomText align={TextAlign.CENTER} theme={TextTheme.ERROR}
+                                                              title='Произошла ошибка при загрузке чата, пожалуйста выберите чат'/>}
+                            <MessageList messages={messages.filter(m => m.chat_id === chat_id)}/>
+                        </div>
+                        <MessageInput onSend={handleSend}/>
+                    </>
+                    )}
+
             </div>
         </>
     )

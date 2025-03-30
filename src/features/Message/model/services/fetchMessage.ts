@@ -11,7 +11,7 @@ export const fetchMessages = createAsyncThunk<
     async (chatId, { extra, rejectWithValue }) => {
         try {
             const response = await extra.api.get<Message[]>(`/message/list/?chatId=${chatId}`);
-            console.log('response', response);
+            // console.log('response', response);
             // @ts-ignore
             return response.data.data.map(msg => ({
                 content: msg.content,

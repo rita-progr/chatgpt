@@ -5,12 +5,16 @@ import { getUserName, userActions } from "@/entities/User";
 import { useAppDispatch } from "@/shared/lib/hooks/appDispatch/appDispatch.ts";
 import { useSelector } from "react-redux";
 import {chatActions} from "@/features/chat";
+import {getModels} from "@/features/Models";
 
 function App() {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const dispatch = useAppDispatch();
     const userName = useSelector(getUserName);
-    // const [isLoading, setIsLoading] = useState(true);
+
+    useEffect(() => {
+        dispatch(getModels())
+    }, [dispatch]);
 
     useEffect(() => {
         dispatch(userActions.initAuthData())

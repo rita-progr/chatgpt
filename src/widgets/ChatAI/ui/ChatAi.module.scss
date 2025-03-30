@@ -17,3 +17,11 @@
   align-items: center;
   justify-content: center;
 }
+.btn{
+  margin-bottom: 1rem;
+}
+@media(max-width:765px){
+  .ChatAi{
+    padding: 1.5rem;
+  }
+}
