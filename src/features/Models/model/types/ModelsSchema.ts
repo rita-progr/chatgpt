@@ -1,11 +1,17 @@
 export interface ModelItem{
     id: string;
-    name: string;
+    label: string;
+}
+
+export interface updateModel {
+    name?: string;
+    model_id: string;
+    model_function_id: string,
 }
 
 export interface ModelsSchema{
     isLoading: boolean,
     error: string|null,
     models: ModelItem[],
-    currentModel?:ModelItem
+    currentModel?:updateModel
 }

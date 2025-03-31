@@ -14,13 +14,21 @@ import {
     messageStream,
     sendMessage
 } from "@/features/Message";
-import {useEffect, useState} from "react";
+import { useCallback, useEffect, useState} from "react";
 import {Loader} from "@/shared/ui/Loader/Loader.tsx";
 import {CustomText, TextAlign, TextTheme} from "@/shared/ui/CustomText/CustomText.tsx";
 import {API_TOKEN} from "@/shared/api/api.ts";
 import {Burger} from "@/widgets/BurgerBtn/ui/Burger.tsx";
 import {SideBar} from "@/widgets/SideBar";
 import {useMediaQuery} from "react-responsive";
+import {
+    getCurrentModelFunc, getCurrentModelId,
+    getCurrentModelName,
+    ModelsSelect
+} from "@/features/Models";
+import {UpdateModel} from "@/features/Models/model/services/UpdateModel.tsx";
+import {getChatId} from "@/features/chat";
+
 
 
 interface ChatAiProps{
@@ -35,8 +43,15 @@ export const ChatAi = ({className, chat_id}:ChatAiProps) => {
     const messages = useSelector(getMessages);
     const [isOpen, setIsOpen] = useState(false);
     const isSmall = useMediaQuery({maxWidth: 980});
+    const getModelFunctionId = useSelector(getCurrentModelFunc);
+    // const currentModelID = useSelector(getCurrentModelId);
+    const value = useSelector(getCurrentModelName);
+    const chatId = useSelector(getChatId)
 
-
+    const onChange = useCallback((modelId: string)=>{
+        console.log(modelId,getModelFunctionId )
+        dispatch(UpdateModel({chatId, modelId: modelId , modelFunctionId: getModelFunctionId}))
+    },[dispatch])
 
     const toggleMenu = () => {
         setIsOpen(!isOpen);
@@ -85,6 +100,7 @@ export const ChatAi = ({className, chat_id}:ChatAiProps) => {
                                                               title='Произошла ошибка при загрузке чата, пожалуйста выберите чат'/>}
                             <MessageList messages={messages.filter(m => m.chat_id === chat_id)}/>
                         </div>
+                        <ModelsSelect value={value} onChange={onChange}/>
                         <MessageInput onSend={handleSend}/>
                     </>
                     )}

@@ -6,6 +6,7 @@ import {userReducer} from "@/entities/User";
 import {createReducerManager} from "./reducerManager.tsx";
 import {chatReducer} from "@/features/chat";
 import {messageReducer} from "@/features/Message";
+import {modelsReducer} from "@/features/Models";
 
 export const createReduxStore = (initialState?: StateSchema,asyncReducers?: ReducersMapObject<StateSchema>, navigate?:  (to: To, options?: NavigateOptions) => void | Promise<void>)=>{
     const extraArg: ThunkExtraArgs = {
@@ -17,7 +18,8 @@ export const createReduxStore = (initialState?: StateSchema,asyncReducers?: Redu
         ...asyncReducers,
         user: userReducer,
         message: messageReducer,
-        chat: chatReducer
+        chat: chatReducer,
+        models: modelsReducer
     }
 
     const reducerManager = createReducerManager(rootReducer);
