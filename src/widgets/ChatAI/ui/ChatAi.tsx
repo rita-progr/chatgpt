@@ -57,10 +57,10 @@ export const ChatAi = ({className, chat_id}:ChatAiProps) => {
             dispatch(modelsActions.setCurrentModel({
                 model_id: selectedModel.id,
                 name: selectedModel.label,
-                model_function_id: selectedModel.functions[0].id || null
+                model_function_id: "describe"
             }));
 
-            dispatch(UpdateModel({chatId, modelId: modelId, modelFunctionId:  selectedModel.functions[0] || null}));
+            dispatch(UpdateModel({chatId, modelId: modelId, modelFunctionId:  "describe"}));
         }
     }, [dispatch, chatId, getModelFunctionId, options]);
 
