@@ -1,6 +1,7 @@
 export interface ModelItem{
     id: string;
     label: string;
+    functions?: any;
 }
 
 export interface updateModel {

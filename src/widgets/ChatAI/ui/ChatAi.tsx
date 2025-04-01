@@ -23,11 +23,12 @@ import {SideBar} from "@/widgets/SideBar";
 import {useMediaQuery} from "react-responsive";
 import {
     getCurrentModelFunc, getCurrentModelId,
-    getCurrentModelName,
+    modelsActions,
     ModelsSelect
 } from "@/features/Models";
 import {UpdateModel} from "@/features/Models/model/services/UpdateModel.tsx";
 import {getChatId} from "@/features/chat";
+import {getAllModels} from "@/features/Models/model/selectors/getModels/getAllModels.tsx";
 
 
 
@@ -44,14 +45,24 @@ export const ChatAi = ({className, chat_id}:ChatAiProps) => {
     const [isOpen, setIsOpen] = useState(false);
     const isSmall = useMediaQuery({maxWidth: 980});
     const getModelFunctionId = useSelector(getCurrentModelFunc);
-    // const currentModelID = useSelector(getCurrentModelId);
-    const value = useSelector(getCurrentModelName);
-    const chatId = useSelector(getChatId)
+    const currentModelID = useSelector(getCurrentModelId);
+    // const value = useSelector(getCurrentModelName);
+    const chatId = useSelector(getChatId);
+    const options = useSelector(getAllModels);
 
-    const onChange = useCallback((modelId: string)=>{
-        console.log(modelId,getModelFunctionId )
-        dispatch(UpdateModel({chatId, modelId: modelId , modelFunctionId: getModelFunctionId}))
-    },[dispatch])
+
+    const onChange = useCallback((modelId: string) => {
+        const selectedModel = options.find(model => model.id === modelId);
+        if (selectedModel) {
+            dispatch(modelsActions.setCurrentModel({
+                model_id: selectedModel.id,
+                name: selectedModel.label,
+                model_function_id: selectedModel.functions[0].id || null
+            }));
+
+            dispatch(UpdateModel({chatId, modelId: modelId, modelFunctionId:  selectedModel.functions[0] || null}));
+        }
+    }, [dispatch, chatId, getModelFunctionId, options]);
 
     const toggleMenu = () => {
         setIsOpen(!isOpen);
@@ -100,7 +111,7 @@ export const ChatAi = ({className, chat_id}:ChatAiProps) => {
                                                               title='Произошла ошибка при загрузке чата, пожалуйста выберите чат'/>}
                             <MessageList messages={messages.filter(m => m.chat_id === chat_id)}/>
                         </div>
-                        <ModelsSelect value={value} onChange={onChange}/>
+                        <ModelsSelect value={currentModelID} onChange={onChange}/>
                         <MessageInput onSend={handleSend}/>
                     </>
                     )}

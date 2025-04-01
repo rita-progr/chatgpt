@@ -18,7 +18,7 @@ export const ModelsSlice = createSlice({
     name:'models',
     initialState,
     reducers:{
-        setModel: (state, action)=>{
+        setCurrentModel: (state, action)=>{
             state.currentModel = action.payload;
         }
     },
@@ -44,7 +44,11 @@ export const ModelsSlice = createSlice({
             })
             .addCase(UpdateModel.fulfilled, (state, action: PayloadAction<updateModel>)=>{
                 state.isLoading = false;
-                state.currentModel = action.payload
+                state.currentModel = {
+                    model_id:action.payload.model_id,
+                    name:action.payload.name || '',
+                    model_function_id: action.payload.model_function_id
+                }
                 state.error = null;
             })
             .addCase(UpdateModel.rejected, (state, action)=>{
